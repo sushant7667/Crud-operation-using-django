@@ -1,0 +1,461 @@
+<DOCTYPE html>
+    <html>
+
+    <head>
+        {% load static %}
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+            crossorigin="anonymous" /> -->
+        <link rel="stylesheet" href="{% static 'css/pracadd.css' %}" />
+        
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+            crossorigin="anonymous" />   
+                  
+          <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+          <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c=" crossorigin="anonymous"></script>
+        <title>Document</title>
+    </head>
+
+    <body class="bodyadd">
+      {% if messages %}
+      <div class="row" style="justify-content: center;">
+        <div class="col-sm-6 col-sm-offset-3">
+          {% for message in messages %}
+          <div style="margin:15px 0px" class="alert alert-{{ message.tags }} alert-dismissible text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <p style="margin:15px 0px" class="alert alert-{{ message.tags }} alert-dismissible text-center" role="alert">{{ message }}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+        <div class="container formmain">
+          <div class="title ticlass">Registration</div>
+          <form action="#" method="post" id="dropdown" enctype="multipart/form-data" onsubmit="z(event)">
+            {% csrf_token %}
+            <div class="user__details">
+              <div class="input__box">
+                <label for="name" class="details">Full Name</label>
+                <input type="text" placeholder="E.g: Sushant" id="Firstnameid" name="Firstname" class="nameValidation" maxlength="15" required>
+                <span id="lblErrorname" class="msgerror" style="color: red"></span>
+              </div>
+              <div class="input__box">
+                <label for="name" class="details">Last Name</label>
+                  <input type="text" placeholder="Yadav" id="Lastnameid" name="Lastname" class="nameValidation" required
+                  maxlength="15" />
+                  <span id="lblError1" class="msgerror" style="color: red"></span>
+              </div>
+              <div class="input__box">
+                <label for="email" class="details">Emaill</label>
+                  <input type="email" id="emailvalid" name="email" class="" required
+                  placeholder="Sushant@gmail.com"  maxlength="20" />
+                  <span id="lblErroremail"  style="color: red"></span>
+                
+              </div>
+              <div class="input__box">
+                
+                <label for="phone" class="details">Phone Number</label>
+                  <input type="tel" id="phoneno" name="mobile_no" class="" required
+                  data-format="custom" data-delimiter="-" data-blocks="2 3 4" data-numeral="9"
+                  placeholder="1234567899" pattern="[0-9\d\-*+#,;]*" minlength="10"
+                  maxlength="10" />
+                
+              </div>
+              <div class="gender__details">
+             
+                <label for="gender__details" class="detailsd">Gender</label><br>
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                  <input type="radio" class="btn-check" name="gender" id="btnradio1" autocomplete="off" value="male" checked="">
+                  <label class="btn btn-outline-secondary" for="btnradio1">Male</label>
+                  <input type="radio" class="btn-check" name="gender" id="btnradio3" autocomplete="off" value="female">
+                  <label class="btn btn-outline-secondary" for="btnradio3">Female</label>
+                </div>
+              </div>
+              <div class="input__box">
+              
+                <label for="Image" class="details">Image</label><br>                        
+                <input type="file" name="image" class="" required accept="image/*" onchange="loadFile(event)">
+                <img id="output" height="80px" width="80px"/>
+              </div>
+
+              <div class="input__box">
+                <label for="datepicker" class="details">Date of birth</label><br>
+                <input class="" type="text" id="datepickerbirth" placeholder="YYYY-MM-DD" name="dateofbirth" required>
+                
+                <span id="lblErrorbirth"  style="color: red"></span>
+              </div>
+              <div class="input__box">
+                <label for="datepicker" class="details">Date of joining</label><br>
+                <input class="" type="text" id="datepickerjoin" placeholder="YYYY-MM-DD" name="dateofjoining" required>
+                <span id="lblErrorjoin"  style="color: red"></span>
+        
+              </div>
+            
+
+
+              <div class="input__box">
+                <label for="subject" class="details">Country</label>
+                <select  class="" name="countryId" id="country" required>
+                    <option value="">select country</option>
+                          <!-- {{country}} -->
+                          {%for i in countryList%}
+                          <option value="{{i.id}}">{{i.cname}}</option>
+                          {%endfor%}
+                </select>
+                
+            </div>
+            <div class="input__box">
+                <label for="subject" class="details">State</label>
+                <select  class="" name="stateId" id="states" required="">
+                    <option value="">select state</option>
+                          {%for j in stateList%}
+                          <option value="{{j.id}}">{{j.sname}}</option>
+                          {%endfor%}
+                </select>
+                
+            </div>
+
+            <div class="input__box">
+              <label for="message" class="details">Address</label>
+                  <input type="text" id="emailvalid" name="address" class="" rows="3" required
+                  placeholder="Write Address Here..."  maxlength="30" />
+            
+          </div>
+
+
+            </div>
+            <div class="button"  type="submit" id="add-name" name="submit">
+              <input type="submit" value="Register" >
+            </div>
+          </form>
+        </div> 
+    </body>
+<script>
+
+function z(e){
+
+  var dob=document.getElementById("datepickerbirth").value;
+  var doj=document.getElementById("datepickerjoin").value;
+
+  ValidateDOB(dob);
+  ValidateDOJ(doj);
+
+  if(dobAccepted && dojAccepted){
+    $('#dropdown').submit();
+  }
+  else{
+    e.preventDefault();
+  }
+}
+
+
+$("#add-name").on("click", function () {
+      var order = {
+        // name: $("#Firstname").val(),
+        countryId: $("#country").val(),
+        stateId: $("#states").val(),
+      };
+
+      // alert("successfully submited");
+      $.ajax({
+        type: "POST",
+        url: "http://127.0.0.1:8000/getusermaster",
+        data: order,
+        success: function (newOrder) {
+          console.log("new", newOrder);
+        },
+      });
+    });
+
+$("#country").change(function () {
+      var url = $("#dropdown");
+      var countryId = $(this).val();
+
+      $.ajax({
+        type:"POST",
+        url:'http://127.0.0.1:8000/Registaration/getstate',
+
+        data: {
+
+          'countryId': countryId
+
+        },
+        success: function (data) {
+
+          let html_data = '<option value=""> select State</option>';
+          data.forEach(function (data) {
+            html_data += `<option value="${data.id}">${data.sname}</option>`
+          });
+          $("#states").html(html_data);
+          }
+        })
+    
+      });
+
+//  validation this filed required
+// $(document).ready(function () {
+//             $('.submitrequired').submit(function () {
+//               console.log("hi")
+//                 var error = 0;
+//                 var name = $('#Firstnameid').val();
+//                 if (name == '') {
+//                     error = 1;
+//                     $('#lblErrorname').html("Name cannot be empty");
+//                     $('#lblErrorname').parent().show();
+//                 }
+//                 var country = $('#country').val();
+//                 if (country == '0') {
+//                     error = 1;
+//                     $('#country_error_msg').html('You should select a country.');
+//                     $('#country_error_msg').parent().show();
+//                 }
+//                 var comment = $('#comment').val();
+//                 if (comment == '') {
+//                     error = 1;
+//                     $('#comment_error_msg').html('Comment cannot be empty.');
+//                     $('#comment_error_msg').parent().show();
+//                 }
+//                 if (!($('#checkboxid').is(':checked'))) {
+//                     error = 1;
+//                     $('#checkboxid_error_msg').html("Please Tick the Agree to Terms of Use.");
+//                     $('#checkboxid_error_msg').parent().show();
+//                 }
+//                 if (error) {
+//                     return false;
+//                 } else {
+//                     return true;
+//                 }
+//             });
+//         });
+
+
+
+// #validation for name and lastname
+    $('.nameValidation').keypress(function (e) {
+      var keyCode = e.keyCode || e.which;
+ 
+         $(".msgerror").html("");
+
+         //Regex for Valid Characters i.e. Alphabets.
+         var regex = /^[A-Za-z]+$/;
+
+         //Validate TextBox value against the Regex.
+         var isValid = regex.test(String.fromCharCode(keyCode));
+         if (!isValid) {
+
+             $(this).siblings('span').html("Name can only contains letters");
+         }
+
+         return isValid;
+    });
+
+// email validation
+// function ValudateEmaiId() {
+//   // close.log(ValudateEmaiId)
+//     var regex = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+//     var value = $("#emailvalid").val();
+//     // var status = ValidateRegeex(regex, value);
+//     if (regex && value == true) {
+//         // alert("correct Email id");
+//     } else {
+//         $("#lblErroremail").html("Enter a Valid email id");
+//     }
+// }
+
+
+// number validation    
+
+$(function(){
+  $("input[name='mobile_no']").on('input', function (e) {
+    $(this).val($(this).val().replace(/[^0-9\d\-*+#,;]/g, ''));
+    $("#lblErrorno").html("Only Numaric values allowed.");
+  });
+});
+
+
+      var loadFile = function(event) {
+      var reader = new FileReader();
+      reader.onload = function(){
+            var output = document.getElementById('output');
+            output.src = reader.result;
+          };
+          reader.readAsDataURL(event.target.files[0]);
+        };
+
+(function () {
+  "use strict";
+  var forms = document.querySelectorAll(".needs-validation");
+  Array.prototype.slice.call(forms).forEach(function (form) {
+    form.addEventListener(
+      "submit",
+      function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add("was-validated");
+      },
+      false
+    );
+  });
+})();
+
+// dateof joining
+// $(function () {
+//         $("#datepickerbirth").datepicker({
+//             minDate: new Date(1900,1-1,1), maxDate: '-18Y',
+//             changeMonth: true,
+//             changeYear: true,
+//             showOn: 'button',
+//             buttonImageOnly: true,
+//             // buttonImage: 'images/calendar.gif',
+//             dateFormat: 'yy-mm-dd',
+//             yearRange: '-110:-18',
+//             onSelect: function (dateString, datepickerbirth) {
+//                 ValidateDOB(dateString);
+//             }
+//         });
+//     });
+//     function ValidateDOB(dateString) {
+//         var lblError = $("#lblErrorbirth");
+//         var parts = dateString.split("/");
+//         var dtDOB = new Date(parts[1] + "/" + parts[0] + "/" + parts[2]);
+//         var dtCurrent = new Date();
+//         lblError.html("Eligibility 18 years ONLY.")
+//         if (dtCurrent.getFullYear() - dtDOB.getFullYear() < 18) {
+//             return false;
+//         }
+ 
+//         if (dtCurrent.getFullYear() - dtDOB.getFullYear() == 18) {
+ 
+//             //CD: 11/06/2018 and DB: 15/07/2000. Will turned 18 on 15/07/2018.
+//             if (dtCurrent.getMonth() < dtDOB.getMonth()) {
+//                 return false;
+//             }
+//             if (dtCurrent.getMonth() == dtDOB.getMonth()) {
+//                 //CD: 11/06/2018 and DB: 15/06/2000. Will turned 18 on 15/06/2018.
+//                 if (dtCurrent.getDate() < dtDOB.getDate()) {
+//                     return false;
+//                 }
+//             }
+//         }
+//         lblError.html("");
+//         return true;
+//     }
+
+// used for datepicker
+jQuery(document).ready(function () {
+          jQuery('#datepickerjoin').datepicker({
+            minDate: -15, maxDate: '15D',
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            changeYear: true,
+
+            onselect: function (dateString, datepickerbirth) {
+              console.log(datepickerbirth,dateString);
+              ValidateDOJ(dateString);
+            }
+        });
+  });
+
+
+$(function () {
+  $( "#datepickerbirth" ).datepicker({
+    minDate: new Date(1900,1-1,1), maxDate: '-18Y',
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '-110:-18',
+            
+            onselect: function (dateString, datepickerbirth) {
+              console.log(datepickerbirth,dateString);
+              ValidateDOB(dateString);
+            }
+            
+
+  });
+});
+
+
+let dojAccepted;
+// datepicker birth 15 + 15 -
+function ValidateDOJ(dateString) {
+        dojAccepted = false;
+        console.log(dateString);
+        var arr=dateString.split("-");
+        var day = arr[2];
+        var month = arr[1];
+        var year = arr[0];
+        var dateRange = 15;
+
+        var mydate = new Date();
+         
+        mydate.setFullYear(year, month-1, day);
+
+        var currdatePlus = new Date();
+        currdatePlus.setDate(currdatePlus.getDate() + dateRange);
+
+        var currdateMinus = new Date();
+        currdateMinus.setDate(currdateMinus.getDate() - dateRange);
+
+        if(mydate > currdatePlus || mydate < currdateMinus )
+        {
+          $("#lblErrorjoin").html("Invalid Range");
+        }
+        else{
+          $("#lblErrorjoin").html("");
+          dojAccepted = true;
+        }
+    }
+let dobAccepted;
+// datepicker birth 18 +
+function ValidateDOB(dateString) {
+        dojAccepted = false;
+        var arr=dateString.split("-");
+        var day = arr[2];
+        var month = arr[1];
+        var year = arr[0];
+        var age = 18;
+        var mydate = new Date();
+        
+        mydate.setFullYear(year, month-1, day);
+
+        var currdate = new Date();
+        currdate.setFullYear(currdate.getFullYear() - age);
+        if(currdate < mydate )
+          {
+            $("#lblErrorbirth").html("Age must be above 18");
+          }
+        else{
+          $("#lblErrorbirth").html("");
+          dobAccepted = true;
+        }
+    }
+
+
+  // #datetim
+const datepicker = document.querySelector('.datepicker');
+const date = new Date();
+const initialDateISO = date.toISOString().slice(0, date.toISOString().indexOf('T'));
+const result = document.querySelector('.result');
+const button = document.querySelector('.submit');
+
+datepicker.value = initialDateISO;
+
+const displayDate = (e) => {
+  e.preventDefault;
+  result.textContent = `Selected date: ${datepicker.value}`;
+}
+
+button.addEventListener("click", displayDate);
+</script>
+    </html>
+</DOCTYPE>
