@@ -1,2 +1,2 @@
 # Crud operation using django
- crud operation in django with js validations
+ simple crud operation with js validations in django.
